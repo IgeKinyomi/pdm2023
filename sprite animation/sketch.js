@@ -1,13 +1,13 @@
 let spelunkyCharater, greenCharacter, ninjaCharacter, blueCharacter;
 let array = [];
 
-function preload() {
- //loading sprite sheets 
-   spelunkyCharater = loadImage("../spritecharacters/PC Computer - Spelunky - SpelunkyGuy.png");
-   blueCharacter = loadImage("../spritecharacters/PC Computer - Spelunky - Blue.png");
-   greenCharacter = loadImage("../spritecharacters/PC Computer - Spelunky - Green.png");
-   ninjaCharacter = loadImage("../spritecharacters/PC Computer - Spelunky - Ninja.png"); 
-}
+ function preload() {
+  //loading sprite sheets 
+   spelunkyCharacterSpritesheet = loadImage("../spritecharacters/PC Computer - Spelunky - SpelunkyGuy.png");
+   blueCharacterSpritesheet = loadImage("../spritecharacters/PC Computer - Spelunky - Blue.png");
+   greenCharacterSpritesheet = loadImage("../spritecharacters/PC Computer - Spelunky - Green.png");
+   ninjaCharacterSpritesheet = loadImage("../spritecharacters/PC Computer - Spelunky - Ninja.png"); 
+ }
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
