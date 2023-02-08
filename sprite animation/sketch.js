@@ -3,10 +3,10 @@ let array = [];
 
  function preload() {
   //loading sprite sheets 
-   spelunkyCharacterSpritesheet = loadImage("../spritecharacters/PC Computer - Spelunky - SpelunkyGuy.png");
-   blueCharacterSpritesheet = loadImage("../spritecharacters/PC Computer - Spelunky - Blue.png");
-   greenCharacterSpritesheet = loadImage("../spritecharacters/PC Computer - Spelunky - Green.png");
-   ninjaCharacterSpritesheet = loadImage("../spritecharacters/PC Computer - Spelunky - Ninja.png"); 
+   spelunkyCharacterSpritesheet = loadImage("spritecharacters/PC Computer - Spelunky - SpelunkyGuy.png");
+   blueCharacterSpritesheet = loadImage("spritecharacters/PC Computer - Spelunky - Blue.png");
+   greenCharacterSpritesheet = loadImage("spritecharacters/PC Computer - Spelunky - Green.png");
+   ninjaCharacterSpritesheet = loadImage("spritecharacters/PC Computer - Spelunky - Ninja.png"); 
  }
 
 function setup() {
