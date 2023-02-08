@@ -14,7 +14,7 @@ function setup() {
     // scale problem (-1)
     imageMode(CENTER);
 
-    spelunkyCharater = new Character(spelunkyCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
+    spelunkyCharacter = new Character(spelunkyCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
     blueCharacter = new Character(blueCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
     greenCharacter = new Character(greenCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
     ninjaCharacter = new Character(ninjaCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
@@ -33,7 +33,7 @@ function draw() {
 
   blueCharacter.draw();
   greenCharacter.draw();
-  spelunkyCharater.draw();
+  spelunkyCharacter.draw();
   ninjaCharacter.draw();
 }
 function keyPressed() {
