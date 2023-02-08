@@ -29,7 +29,7 @@ function setup() {
     
 }
 function draw() {
-  background(220);
+  background(210,0,200,220);
 
   blueCharacter.draw();
   greenCharacter.draw();
