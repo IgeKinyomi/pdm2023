@@ -1,4 +1,4 @@
-let spelunkyCharater, greenCharacter, ninjaCharacter, blueCharacter;
+let spelunkyCharacterSpritesheet, greenCharacterSpritesheet, ninjaCharacterSpritesheet, blueCharacterSpritesheet;
 let array = [];
 
  function preload() {
@@ -14,10 +14,10 @@ function setup() {
     // scale problem (-1)
     imageMode(CENTER);
 
-    spelunkyCharater = new Character(spelunkyChar, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
-    blueCharacter = new Character(blueChar, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
-    greenCharacter = new Character(greenChar, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
-    ninjaCharacter = new Character(ninjaChar, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
+    spelunkyCharater = new Character(spelunkyCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
+    blueCharacter = new Character(blueCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
+    greenCharacter = new Character(greenCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
+    ninjaCharacter = new Character(ninjaCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
     
     let choices = [35, 70]
     for(let i = 0; i < 20; i++) {
