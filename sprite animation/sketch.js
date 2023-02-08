@@ -3,10 +3,10 @@ let array = [];
 
 function preload() {
  //loading sprite sheets 
-   spelunkyCharater = loadImage("../spritecharacters/SpelunkyGuy.png");
-   blueCharacter = loadImage("../spritecharacters/Blue.png");
-   greenCharacter = loadImage("../spritecharacters/Green.png");
-   ninjaCharacter = loadImage("../spritecharacters/Ninja.png"); 
+   spelunkyCharater = loadImage("../spritecharacters/PC Computer - Spelunky - SpelunkyGuy.png");
+   blueCharacter = loadImage("../spritecharacters/PC Computer - Spelunky - Blue.png");
+   greenCharacter = loadImage("../spritecharacters/PC Computer - Spelunky - Green.png");
+   ninjaCharacter = loadImage("../spritecharacters/PC Computer - Spelunky - Ninja.png"); 
 }
 
 function setup() {
@@ -98,7 +98,7 @@ class Character {
     this.speed = speed;
   }
 
-  draw() {
+   draw() {
     push();
     translate(this.x,this.y);
     scale(this.facing, 1);
@@ -128,7 +128,7 @@ class Character {
     pop();
   }
 
-  go(direction) {
+   go(direction) {
     this.move = direction;
     this.facing = direction;
     this.sx = 3;
