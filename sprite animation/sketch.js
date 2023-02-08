@@ -35,10 +35,6 @@ function draw() {
   greenCharacter.draw();
   spelunkyCharater.draw();
   ninjaCharacter.draw();
-
-  for(let i=0; i < 10; i++) {
-    animations[i].draw();
-  }
 }
 function keyPressed() {
   if(keyCode == RIGHT_ARROW) {
@@ -48,10 +44,10 @@ function keyPressed() {
     ninjaCharacter.go(1);
 
   } else if (keyCode == LEFT_ARROW) {
-    greenCharacter.go(1);
-    blueCharacter.go(1);
-    spelunkyCharacter.go(1);
-    ninjaCharacter.go(1);
+    greenCharacter.go(-1);
+    blueCharacter.go(-1);
+    spelunkyCharacter.go(-1);
+    ninjaCharacter.go(-1);
 
   }
 }
