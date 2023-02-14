@@ -1,133 +1,232 @@
 let bugCharacterSpritesheet;
 let array = [];
+let totalPeople = 5;
+let movements = [];
+
+
+const GameState = {
+  Start: "Start",
+  Playing: "Playing",
+  GameOver: "GameOver"
+};
+
+let game = {scsore: 0, maxScore: 0, maxTime:10, elapsedTime:0, totalSprites:15, state: GameState.Start, targetSprite:2 };
 
  function preload() {
   //loading sprite sheets 
    bugCharacterSpritesheet = loadImage("bug squish/PC Computer - bug - bugpiskel.png");
+   for(let i=0;i < bugpiskel.png; i++) {
+    bugCharacterSpritesheet [i] = loadImage("bug squish/PC Computer - bug - bugpiskel.png"[i]);
+   }
  }
 
 function setup() {
   createCanvas(window.innerWidth, window.innerHeight);
     // scale problem (-1)
     imageMode(CENTER);
+    angleMode(DEGREES);
 
-    bugCharacter = new Character(spelunkyCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
-    blueCharacter = new Character(blueCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
-    greenCharacter = new Character(greenCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
-    ninjaCharacter = new Character(ninjaCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
-    
-    let choices = [35, 70]
-    for(let i = 0; i < 20; i++) {
-      array[i] = new Cloud(random(0, window.innerWidth), 70, random(1, 2));
-    }
-    for(let i = 20; i < 40; i++) {
-      array[i] = new Cloud(random(0, window.innerWidth), 35, random(1, 2));
-    }
-    
+    reset();
 }
+
+function reset() {
+  game.elapsedTime = 0;
+  game.score = 0;
+  game.totalSprites = random(10,30);
+
+  animations = [];
+  for(let i=0; i < game.totalSprites; i++) {
+    movements [i]= new Character(bugCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));    
+ }
+}
+
 function draw() {
-  background(210,0,200,220);
+  switch (game.state){
+    case GameState.Playing:
+       background(210,0,200,220);
+       for(let i=0; i < animations.length; i++) {
+        animations[i].draw();
+  }
 
-  blueCharacter.draw();
-  greenCharacter.draw();
-  spelunkyCharacter.draw();
-  ninjaCharacter.draw();
+  fill(0);
+  textSize(40);
+  text(game.score,20,40);
+  let currentTime = game.maxTime - game.elapsedTime;
+  text(ceil(currentTime), 300,40);
+  game.elapsedTime += deltaTime / 1000;
+
+  if (currentTime < 0)
+    game.state = GameState.GameOver;
+  break;
+case GameState.GameOver:
+  game.maxScore = max(game.score,game.maxScore);
+
+  background(0);
+  fill(255);
+  textSize(40);
+  textAlign(CENTER);
+  text("Game Over!",200,200);
+  textSize(35);
+  text("Score: " + game.score,200,270);
+  text("Max Score: " + game.maxScore,200,320);
+  break;
+case GameState.Start:
+  background(0);
+  fill(255);
+  textSize(50);
+  textAlign(CENTER);
+  text("Cyclops Game",200,200);
+  textSize(30);
+  text("Press Any Key to Start",200,300);
+  break;
 }
+
+}
+
 function keyPressed() {
-  if(keyCode == RIGHT_ARROW) {
-    greenCharacter.go(1);
-    blueCharacter.go(1);
-    spelunkyCharacter.go(1);
-    ninjaCharacter.go(1);
-
-  } else if (keyCode == LEFT_ARROW) {
-    greenCharacter.go(-1);
-    blueCharacter.go(-1);
-    spelunkyCharacter.go(-1);
-    ninjaCharacter.go(-1);
-
-  }
+switch(game.state) {
+case GameState.Start:
+  game.state = GameState.Playing;
+  break;
+case GameState.GameOver:
+  reset();
+  game.state = GameState.Playing;
+  break;
+}
 }
 
-function keyReleased() {
-  greenCharacter.go(1);
-  blueCharacter.go(1);
-  spelunkyCharacter.go(1);
-  ninjaCharacter.go(1);
-}
-
-class Cloud {
-  constructor(x, y, speed) {
-    this.x = x;
-    this.y = y;
-    this.speed = speed;
-  }
-
-  draw() {
-    fill(255);
-    noStroke();
-    ellipse(this.x, this.y, 40, 20);
-    ellipse(this.x+30, this.y, 40, 20);
-    ellipse(this.x+60, this.y, 40, 20);
-    ellipse(this.x+15, this.y-10, 40, 20);
-    ellipse(this.x+45, this.y-10, 40, 20);
-
-    this.x += this.speed;
-
-    if(this.x > window.innerWidth + 100) {
-      this.x = -100;
+function mousePressed() {
+switch(game.state) {
+case GameState.Playing:
+  for (let i=0; i < animations.length; i++) {
+    let contains = animations[i].contains(mouseX,mouseY);
+    if (contains) {
+      if (animations[i].moving != 0) {
+        animations[i].stop();
+        if (animations[i].spritesheet === spriteSheets[game.targetSprite])
+          game.score += 1;
+        else
+          game.score -= 1;
+      }
+      else {
+        if (animations[i].xDirection === 1)
+          animations[i].moveRight();
+        else
+          animations[i].moveLeft();
+      }
     }
   }
+  break;
+// case GameState.GameOver:
+//   reset();
+//   game.state = GameState.Playing;
+//   break;
+}
 
 }
 
-class Character {
-  constructor(character, x, y, speed) {
-    this.character = character;
-    this.x = x;
-    this.y = y;
-    this.move = 0;
-    this.facing = 1;
-    this.speed = speed;
-  }
+class WalkingAnimation {
+constructor(spritesheet, sw, sh, dx, dy, animationLength, speed, framerate, vertical = false, offsetX = 0, offsetY = 0) {
+this.spritesheet = spritesheet;
+this.sw = sw;
+this.sh = sh;
+this.dx = dx;
+this.dy = dy;
+this.u = 0;
+this.v = 0;
+this.animationLength = animationLength;
+this.currentFrame = 0;
+this.moving = 1;
+this.xDirection = 1;
+this.offsetX = offsetX;
+this.offsetY = offsetY;
+this.speed = speed;
+this.framerate = framerate*speed;
+this.vertical = vertical;
+}
 
-   draw() {
-    push();
-    translate(this.x,this.y);
-    scale(this.facing, 1);
+draw() {
 
-    if(this.move == 0) {
-      image(this.character, 0, 0, 80, 80, 0, 0, 80, 80);
-    } else {
-      image(this.character, 0, 0, 80, 80, 80 * (this.sx + 1), 0, 80, 80);
-    }
+// if (this.moving != 0)
+//   this.u = this.currentFrame % this.animationLength;
+// else
+//   this.u = 0;
+
+this.u = (this.moving != 0) ? this.currentFrame % this.animationLength : this.u;
+push();
+translate(this.dx,this.dy);
+if (this.vertical)
+  rotate(90);
+scale(this.xDirection,1);
 
 
-    if(frameCount % (7 - (round(this.speed - 2))) == 0) {
-      this.sx = (this.sx + 1) % 8;
-    }
+//rect(-26,-35,50,70);
 
-    if(this.x > window.innerWidth) {
-      this.move = -(this.move);
-      this.facing = -(this.facing);
-    }
+image(this.spritesheet,0,0,this.sw,this.sh,this.u*this.sw+this.offsetX,this.v*this.sh+this.offsetY,this.sw,this.sh);
+pop();
+let proportionalFramerate = round(frameRate() / this.framerate);
+if (frameCount % proportionalFramerate == 0) {
+  this.currentFrame++;
+}
 
-    if(this.x < 0) {
-      this.move = -(this.move);
-      this.facing = -(this.facing);
-    }
+if (this.vertical) {
+  this.dy += this.moving*this.speed;
+  this.move(this.dy,this.sw / 4,height - this.sw / 4);
+}
+else {
+  this.dx += this.moving*this.speed;
+  this.move(this.dx,this.sw / 4,width - this.sw / 4);
+}
 
-    this.x += this.speed * this.move;
-    pop();
-  }
 
-   go(direction) {
-    this.move = direction;
-    this.facing = direction;
-    this.sx = 3;
-  }
+}
 
-  stop() {
-    this.move = 0;
-  }
+move(position,lowerBounds,upperBounds) {
+if (position > upperBounds) {
+  this.moveLeft();
+} else if (position < lowerBounds) {
+  this.moveRight();
+}
+}
+
+moveRight() {
+this.moving = 1;
+this.xDirection = 1;
+this.v = 0;
+}
+
+moveLeft() {
+this.moving = -1;
+this.xDirection = -1;
+this.v = 0;
+}
+
+keyPressed(right, left) {
+if (keyCode === right) {
+
+  this.currentFrame = 1;
+} else if (keyCode === left) {
+
+  this.currentFrame = 1;
+}
+}
+
+keyReleased(right,left) {
+if (keyCode === right || keyCode === left) {
+  this.moving = 0;
+}
+}
+
+contains(x,y) {
+//rect(-26,-35,50,70);
+let insideX = x >= this.dx - 26 && x <= this.dx + 25;
+let insideY = y >= this.dy - 35 && y <= this.dy + 35;
+return insideX && insideY;
+}
+
+stop() {
+this.moving = 0;
+this.u = 7;
+this.v = 8;
+}
 }
