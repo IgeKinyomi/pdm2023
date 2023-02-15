@@ -5,7 +5,7 @@ let walkingAnimation;
 let walkingAnimation2;
 let chronoAnimation;
 
-let spriteSheetFilenames = ["SpelunkyGuy.png", "Green.png", "Cyclops.png"];
+let spriteSheetFilenames = ["bugpiskel.png"];
 let spriteSheets = [];
 let animations = [];
 
