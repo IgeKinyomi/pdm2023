@@ -15,7 +15,7 @@ let game = {scsore: 0, maxScore: 0, maxTime:10, elapsedTime:0, totalSprites:15, 
  function preload() {
   //loading sprite sheets 
    bugCharacterSpritesheet = loadImage("bug squish/PC Computer - bug - bugpiskel.png");
-   for(let i=0;i < bugpiskel.png; i++) {
+   for(let i=0;i < 30; i++) {
     bugCharacterSpritesheet [i] = loadImage("bug squish/PC Computer - bug - bugpiskel.png"[i]);
    }
  }
@@ -36,7 +36,7 @@ function reset() {
 
   animations = [];
   for(let i=0; i < game.totalSprites; i++) {
-    movements [i]= new Character(bugCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));    
+    movements [i]= new WalkingAnimation(bugCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));    
  }
 }
 
