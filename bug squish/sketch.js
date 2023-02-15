@@ -5,7 +5,7 @@ let walkingAnimation;
 let walkingAnimation2;
 let chronoAnimation;
 
-let spriteSheetFilenames = ["bugpiskel.png"];
+let bugCharacterSpritesheet = ["bugpiskel.png"];
 let spriteSheets = [];
 let animations = [];
 
@@ -79,7 +79,7 @@ function draw() {
       textAlign(CENTER);
       text("Cyclops Game",200,200);
       textSize(30);
-      text("Press Any Key to Start",200,300);
+      text("Press Spacebar to Start",200,300);
       break;
   }
 
