@@ -5,7 +5,7 @@ let walkingAnimation;
 let walkingAnimation2;
 let chronoAnimation;
 
-let bugCharacterSpritesheet = ["bugpiskel.png"];
+let bugCharacterSpritesheet;
 let spriteSheets = [];
 let animations = [];
 
@@ -15,13 +15,11 @@ const GameState = {
   GameOver: "GameOver"
 };
 
-let game = { score: 0, maxScore: 0, maxTime: 10, elapsedTime: 0, totalSprites: 15, state: GameState.Start, targetSprite: 2 };
+let game = { score: 0, maxScore: 0, maxTime: 30, elapsedTime: 0, totalSprites: 100, state: GameState.Start, targetSprite: 2 };
 
 function preload() {
-  for(let i=0; i < bugCharacterSpritesheet.length; i++) {
-    bugCharacterspriteSheets = loadImage("bugpiskel.png");
+    bugCharacterSpritesheet = loadImage("bugpiskel.png");
   }
-}
 
 function setup() {
   createCanvas(400, 400);
@@ -39,6 +37,7 @@ function reset() {
   animations = [];
   for(let i=0; i < game.totalSprites; i++) {
     animations[i] = new WalkingAnimation(bugCharacterSpritesheet,32,32,random(100,300),random(100,300),9,random(0.5,1),6,random([0,1]));
+    print(animations[i])
   }
 }
 
@@ -77,7 +76,7 @@ function draw() {
       fill(255);
       textSize(50);
       textAlign(CENTER);
-      text("Cyclops Game",200,200);
+      text("BugSquish Game",200,200);
       textSize(30);
       text("Press Spacebar to Start",200,300);
       break;
