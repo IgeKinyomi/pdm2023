@@ -18,7 +18,7 @@ const GameState = {
 let game = { score: 0, maxScore: 0, maxTime: 10, elapsedTime: 0, totalSprites: 15, state: GameState.Start, targetSprite: 2 };
 
 function preload() {
-  for(let i=0; i < spriteSheetFilenames.length; i++) {
+  for(let i=0; i < bugCharacterSpritesheet.length; i++) {
     bugCharacterspriteSheets = loadImage("bugpiskel.png");
   }
 }
