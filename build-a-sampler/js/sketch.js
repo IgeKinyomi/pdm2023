@@ -19,6 +19,12 @@ let fSlider;
 
 // let button1, button2, button3;
 
+function draw() {
+  background(224, 176, 255);
+  text('Press each button for sound and slide the bars below.', 0, 150)
+
+}
+
 function setup() {
   createCanvas(400, 400);
   sounds.connect(delay);
@@ -44,8 +50,8 @@ function setup() {
 }
 
 function draw() {
-  background(220, 120, 180);
-  text('press the buttons for sound', 0, 150)
+  background(224, 176, 255);
+  text('Press each button for sound and slide the bars below.', 0, 150)
 
 }
 
