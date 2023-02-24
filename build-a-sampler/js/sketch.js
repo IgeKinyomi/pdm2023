@@ -1,4 +1,4 @@
-//Ige Kinyomi 2023
+//Ige Kinyomi Build a Sampler 2023
 
 let sounds = new Tone.Players({
 
@@ -19,11 +19,6 @@ let fSlider;
 
 // let button1, button2, button3;
 
-function draw() {
-  background(224, 176, 255);
-  text('Press each button for sound and slide the bars below.', 0, 150)
-
-}
 
 function setup() {
   createCanvas(400, 400);
