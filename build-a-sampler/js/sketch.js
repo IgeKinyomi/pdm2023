@@ -46,7 +46,7 @@ function setup() {
 
 function draw() {
   background(224, 176, 255);
-  text('Press each button for sound and slide the bars below.', 0, 50)
+  text('Press each button for sound and slide the bars below.', 0, 190)
 
 }
 
