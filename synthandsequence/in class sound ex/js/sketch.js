@@ -1,3 +1,5 @@
+let slider;
+
 const synth = new Tone.Synth();
 const drum = new Tone.MembraneSynth();
 const metal = new Tone.MetalSynth({
@@ -33,7 +35,13 @@ let notes = {
 
 function setup() {
   createCanvas(400, 400);
-  slider = new Nexus.Slider('#slider');
+  slider = new Nexus.Slider('#slider' ,{
+'size':[150,40] ,
+'min': 0.1 ,
+'max': 1 ,
+'step': 0.1   
+  });
+
   synth.release = 2;
   synth.resonance = 0.98;
 //synth.harmonicity.value = 1.25
