@@ -47,15 +47,15 @@ function setup() {
 //synth.harmonicity.value = 1.25
 //play middle 'C' for duration of 8th note
 synth.triggerAttackRelease("C4", "8n");
-//change value of chorus room size
-slider.on('change', (v) => {
-  chorus.roomSize.value = v;
+//delays the time in ms of chorus
+slider.on('change', (v) =>{
+ chorus.delayTime.value = v
 })
 }
 
 //Don't put sounds in the draw function, it will make it weird
 function draw() {
-  background(175,238,238);
+  background(254,216,177);
   text('Press keys (a-k) on your keyboard to create sounds!', 0, 200)
 }
 
