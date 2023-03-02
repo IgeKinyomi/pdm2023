@@ -47,7 +47,7 @@ slider.on('change', (v) => {
 
 //Don't put sounds in the draw function, it will make it weird
 function draw() {
-  background(220);
+  background(175,238,238);
   text('Press keys (a-k) on your keyboard to create sounds!', 0, 200)
 }
 
