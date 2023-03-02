@@ -1,5 +1,5 @@
 const synth = new Tone.Synth():
-
+// code base
 //Key notes connecting with keyboard letters as a piano
 let notes = {
 
@@ -17,6 +17,10 @@ let notes = {
 function setup() {
   createCanvas(400, 400);
   synth.toDestination();
+}
+
+function mousePressed() {
+  Tone.start();
 }
 
 
