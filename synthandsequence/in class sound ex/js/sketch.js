@@ -46,13 +46,14 @@ function draw() {
 }
 //console.log toPlay
 function keyPressed(){
+  Tone.start();
   let toPlay = notes[key];
   console.log(toPlay);
   synth.triggerAttackRelease(toPlay,0.5);
   metal.triggerAttackRelease("C3","8n",'+0.5' );
   drum.triggerAttackRelease("C2","8n", '+1' );
 //to play sound
-  Tone.start();
+  
 }
 
 
