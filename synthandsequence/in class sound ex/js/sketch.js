@@ -45,13 +45,16 @@ function draw() {
   background(220);
 }
 //console.log toPlay
-functionkeyPressed(){
+function keyPressed(){
   let toPlay = notes[key];
   console.log(toPlay);
   synth.triggerAttackRelease(toPlay,0.5);
   metal.triggerAttackRelease("C3","8n",'+0.5' );
   drum.triggerAttackRelease("C2","8n", '+1' );
+//to play sound
+  Tone.start();
 }
+
 
 
 // put .value with param or signal 
