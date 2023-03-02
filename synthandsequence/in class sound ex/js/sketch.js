@@ -33,17 +33,24 @@ let notes = {
 
 function setup() {
   createCanvas(400, 400);
+  slider = new Nexus.Slider('#slider');
   synth.release = 2;
   synth.resonance = 0.98;
 //synth.harmonicity.value = 1.25
 //play middle 'C' for duration of 8th note
 synth.triggerAttackRelease("C4", "8n");
+//change value of reverb room size
+slider.on('change', (v) => {
+  reverb.roomSize.value = v;
+})
 }
 
 //Don't put sounds in the draw function, it will make it weird
 function draw() {
   background(220);
+  text('Press keys (a-k) on your keyboard to create sounds!', 0, 200)
 }
+
 //console.log toPlay
 function keyPressed(){
   Tone.start();
@@ -52,7 +59,6 @@ function keyPressed(){
   synth.triggerAttackRelease(toPlay,0.5);
   metal.triggerAttackRelease("C3","8n",'+0.5' );
   drum.triggerAttackRelease("C2","8n", '+1' );
-//to play sound
   
 }
 
