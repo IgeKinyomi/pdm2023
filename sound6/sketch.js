@@ -4,6 +4,7 @@ let nxDial,nxButton;
 // fourth sound assignment, bug squish or paint app and add music sound effects
 // Tone.Transport.stop() in console lets you test 
 //Tone.Transport.bpm.value  or Tone.transport.bpm(400,0) - and ex
+// line 13 after .start ('0:0')  0r (2m) or (1m) - time to start: null = rest
 let synth = newTone.PolySynth().toDestination();
 
 let pattern = newTone.Pattern(function (time,note) {
