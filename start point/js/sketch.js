@@ -1,8 +1,15 @@
+var greetings = "Plane Seatbelt Sound Effect. Click & hold the mouse button!";
+
+function preload(){
+	plane = loadImage('seatbelt.jpg');
+}
+
+
 let initTone = true;
-let pitch 
+let pitch = 600
 
 // Set up Tone
-let osc = new Tone.AMOscillator(600, 'sine', 'sine').start()
+let osc = new Tone.AMOscillator(600, 'sine', 'sine').start();
 let gain = new Tone.Gain().toDestination();
 let pan = new Tone.Panner().connect(gain);
 let ampEnv = new Tone.AmplitudeEnvelope({
@@ -20,11 +27,11 @@ let noiseEnv = new Tone.AmplitudeEnvelope({
   decay: 0.2,
   sustain: 1.0,
   release: 0.8
-}).connect(pan);
-osc.connect(gain);
+}).connect(gain);
 
 //noise, filter, envelope
 let noiseFilter = new Tone.Filter(800,'lowpass').connect(noiseEnv);
+noise.connect(noiseFilter)
 
 function setup() {
   createCanvas(400, 400);
@@ -33,25 +40,31 @@ function setup() {
 function draw() {
   background(220);
 
- if (frameCount % 60)
-  text('press spacebar to initialize audio!', 100, 200);
+ if ((frameCount % 60) === 0) {
+  pitch = random(300, 1000);
+}
+
+  text('press spacebar to initialize audio!', 100, 100);
+
 }
 
 function keyPressed(){
-if (keyCode == 32 && initTone === true){
+if (keyCode == 32 && initTone === true) {
   console.log('spacebar pressed'); 
   Tone.start();
   initTone = false;
-}
+  }
 }
 
 
 //oscillators are always on
 function mousePressed() {
   console.log('pressed');
-  ampEnv.triggerAttackRelease(0.5);
+  ampEnv.triggerAttackRelease('4n');
 osc.frequency.setValueAtTime(pitch+200, '+1');
 ampEnv.triggerAttackRelease('4n', '+1');
 
-if (mouseY >200)
+if (mouseY >200) {
+  noiseEnv.triggerAttackRelease(0.5);
+  }
 }
