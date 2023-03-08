@@ -1,10 +1,3 @@
-var greetings = "Plane Seatbelt Sound Effect. Click & hold the mouse button!";
-
-function preload(){
-	plane = loadImage('seatbelt.jpg');
-}
-
-
 let initTone = true;
 let pitch = 600
 
@@ -20,7 +13,6 @@ let ampEnv = new Tone.AmplitudeEnvelope({
 }).connect(pan);
 osc.connect(ampEnv);
 
-
 let noise = new Tone.Noise('pink').start();
 let noiseEnv = new Tone.AmplitudeEnvelope({
   attack: 0.1,
@@ -33,8 +25,13 @@ let noiseEnv = new Tone.AmplitudeEnvelope({
 let noiseFilter = new Tone.Filter(800,'lowpass').connect(noiseEnv);
 noise.connect(noiseFilter)
 
+let img;
+function preload() {
+  img =loadImage('seatbelt.jpg');
+}
+
 function setup() {
-  createCanvas(400, 400);
+  createCanvas(1000, 1000);
 }
 
 function draw() {
@@ -44,7 +41,9 @@ function draw() {
   pitch = random(300, 1000);
 }
 
-  text('press spacebar to initialize audio!', 100, 100);
+image (img, 0, 0, 400, 400);
+
+  text('Press the spacebar or mouse to initialize audio!', 50, 450,);
 
 }
 
