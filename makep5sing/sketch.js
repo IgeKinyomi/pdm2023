@@ -29,7 +29,7 @@ function setup() {
 function draw() {
     
 }
-
+// changes color
 function mouseClicked() {
   if(mouseX < 41)
   {
@@ -69,7 +69,7 @@ function mouseClicked() {
     ellipse(mouseX, mouseY, 1, 1);
   }
 }
-
+// add sound here 
 function mouseDragged() {
   stroke(drawColor)
   if (mouseX > 55 || mouseY > 431) {
@@ -77,3 +77,4 @@ function mouseDragged() {
     line(mouseX, mouseY, pmouseX, pmouseY);
   }
 }
+ 
