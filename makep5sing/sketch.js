@@ -77,4 +77,16 @@ function mouseDragged() {
     line(mouseX, mouseY, pmouseX, pmouseY);
   }
 }
+//put sound triggers instead of buttons 
+function mousePressed() {
+  console.log('pressed');
+  ampEnv.triggerAttackRelease('4n');
+osc.frequency.setValueAtTime(pitch+200, '+1');
+ampEnv.triggerAttackRelease('4n', '+1');
+
+if (mouseY >200) {
+  noiseEnv.triggerAttackRelease(0.5);
+  }
+}
+
  
