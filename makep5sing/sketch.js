@@ -1,4 +1,6 @@
 let drawColor;
+//where do i put this?
+Tone.start();
 
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight);
