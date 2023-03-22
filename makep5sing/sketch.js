@@ -55,34 +55,45 @@ function mouseClicked() {
     if(mouseY < 41) 
     {
       drawColor = 'red';
+      drawMelody= ["F6","G6"];
     } else if(mouseY < 81)
     {
       drawColor = 'orange';
+      drawMelody=["F4","G4"];
     } else if(mouseY < 121)
     {
       drawColor = 'yellow';
+      drawMelody=["F3","G3"];
     } else if(mouseY < 161)
     {
       drawColor = 'green';
+      drawMelody=["F2","G2"];
     } else if(mouseY < 201)
     {
       drawColor = 'cyan';
+      drawMelody=["A5","B5"];
     } else if(mouseY < 241)
     {
       drawColor = 'blue';
+      drawMelody=["A6","B6"];
     } else if(mouseY < 281)
     {
       drawColor = 'magenta';
+      drawMelody=["A7","B7"];
     } else if(mouseY < 321)
     {
       drawColor = 'brown';
+      drawMelody=["C5","D5"];
     } else if(mouseY < 361)
     {
       drawColor = 'white';
+      drawMelody=["C6","D6"];
     } else if(mouseY < 401)
     {
       drawColor = 'black';
+      drawMelody=["C7","D7"];
     }
+    drawSeq.add(0,drawMelody);
   } else {
     fill = drawColor;
     ellipse(mouseX, mouseY, 1, 1);
