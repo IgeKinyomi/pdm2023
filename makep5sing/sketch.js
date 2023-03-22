@@ -49,7 +49,7 @@ function draw() {
 }
 
 function mouseClicked() {
-  
+  Tone.context.resume();
   if(mouseX < 41)
   {
     if(mouseY < 41) 
