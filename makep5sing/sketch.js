@@ -1,6 +1,19 @@
-let drawColor;
-//where do i put this?
-Tone.start();
+let drawColor = 'black';
+let simpSynth, bgSeq, drawSeq;
+let bgMelody = ["C4", "D4", "E4", "F4", "G4", "A4"];
+let drawMelody = ["F3", "E3", "D3", "C3", "B3", "A3"];
+
+simpSynth = new Tone.Synth().toMaster();
+
+bgSeq = new Tone.Sequence(function(time, note) {
+  simpSynth.triggerAttackRelease(note, 0.5);
+  console.log(note);
+}, bgMelody, '4n');
+
+drawSeq = new Tone.Sequence(function(time, note) {
+  simpSynth.triggerAttackRelease(note, 0.5);
+  console.log(note);
+}, drawMelody, '4n');
 
 function setup() {
     createCanvas(window.innerWidth, window.innerHeight);
@@ -26,13 +39,17 @@ function setup() {
     rect(2, 322,40,40);
     fill('black');
     rect(2, 362,40,40);
+    Tone.Transport.bpm.value = 90;
+    Tone.Transport.start();
   }
-  
+
+    
 function draw() {
     
 }
 
 function mouseClicked() {
+  
   if(mouseX < 41)
   {
     if(mouseY < 41) 
@@ -73,6 +90,7 @@ function mouseClicked() {
 }
 
 function mouseDragged() {
+  drawSeq.start();
   stroke(drawColor)
   if (mouseX > 55 || mouseY > 431) {
     strokeWeight(10);
