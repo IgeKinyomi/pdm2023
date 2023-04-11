@@ -10,6 +10,7 @@ void setup() {
 void loop() {
   Serial.write(brightness); // write the brightness to the serial port to let p5.js read this value 
   int sensorValue;
+  background(brightness, 0, 255);
   sensorValue = analogRead(sensorPin); // read from the potentiometer 
   brightness = map(sensorValue, 0, 1023, 0, 255); // map the value from potentiometer (range from 0 to 1023) to the brightness (from 0 to 255)
   // control the brightenss based on the sensor value
