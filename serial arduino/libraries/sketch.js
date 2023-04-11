@@ -18,4 +18,4 @@ void loop() {
   } else{
     digitalWrite(led1Pin, LOW);  // turn the LED off
   }
-} 
+}
