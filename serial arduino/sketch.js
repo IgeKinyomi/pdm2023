@@ -23,7 +23,7 @@ function draw() {
   background(220);
 
   if(writer) {
-writer.write(new Uint8Array([slider.value()]))
+writer.write(new Uint8Array([slider.value(),"\n"]))
   }
 }
 
