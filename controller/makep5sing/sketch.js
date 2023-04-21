@@ -162,7 +162,7 @@ async function serialRead() {
     let temp = splitTokens(value,',');
     xValue = temp[0];
     yValue = temp[1];
-    isPressedButton = temp[1];    
+    isPressedButton = temp[2];    
   }
 }
 
