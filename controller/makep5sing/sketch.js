@@ -35,6 +35,7 @@ function setup() {
 if ("serial" in navigator) {
   textAlign(CENTER,CENTER);
   textSize(25);
+  
   }
     createCanvas(window.innerWidth, window.innerHeight);
     background(240, 240, 240);
@@ -152,7 +153,8 @@ function mouseDragged() {
   }
 }
 
-async function serialRead() {
+async function serialRead()
+ {
   while(true) {
     const { value, done } = await reader.read();
     if (done) {
@@ -160,6 +162,8 @@ async function serialRead() {
       break;
     }
     let temp = splitTokens(value,',');
+    console.log(xValue);
+    console.log(yValue);
     xValue = temp[0];
     yValue = temp[1];
     isPressedButton = temp[2];    
