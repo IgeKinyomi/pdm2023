@@ -15,18 +15,18 @@ let cursor;
 let redC = 100;
 let greenC = 100;
 let blueC = 100;
+let pXvalue = 0;
+let pYvalue = 0;
 
 
 simpSynth = new Tone.Synth().toMaster();
 
 bgSeq = new Tone.Sequence(function(time, note) {
   simpSynth.triggerAttackRelease(note, 0.5);
-  console.log(note);
 }, bgMelody, '4n');
 
 drawSeq = new Tone.Sequence(function(time, note) {
   simpSynth.triggerAttackRelease(note, 0.5);
-  console.log(note);
 }, drawMelody, '4n');
 
 function setup() {
@@ -78,13 +78,14 @@ function draw() {
   button.style('background-color', 'black');
   button.style('color', 'white');
 
-   fill("red");
+   
     cursor = circle(xValue,yValue);
 if(isPressedButton==0){
       buttonPressed();
     }
     if (reader && frameCount%3==0) {
       serialRead();
+      joystickDragged();
     }
 
   if(writer&& frameCount%5===0){
@@ -140,16 +141,16 @@ function buttonPressed() {
     drawSeq.add(0,drawMelody);
   } else {
     fill = drawColor;
-    ellipse(xValue, yValue, 1, 1);
+    ellipse(xValue, yValue, 50, 50);
   }
 }
 
-function mouseDragged() {
+function joystickDragged() {
   drawSeq.start();
   stroke(drawColor)
   if (xValue > 55 || mouseY > 431) {
     strokeWeight(10);
-    line(mouseX, mouseY, pmouseX, pmouseY);
+    line(xValue, yValue, pXvalue, pYvalue);
   }
 }
 
@@ -162,10 +163,12 @@ async function serialRead()
       break;
     }
     let temp = splitTokens(value,',');
-    console.log(xValue);
-    console.log(yValue);
+    pXvalue = xValue;
+    pYvalue = yValue;
     xValue = temp[0];
     yValue = temp[1];
+    console.log(xValue);
+    console.log(yValue);
     isPressedButton = temp[2];    
   }
 }
