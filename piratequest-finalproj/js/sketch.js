@@ -98,7 +98,7 @@ class Character {
     push();
     translate(this.x,this.y);
     scale(this.facing, 1);
-
+    
     if(this.move == 0) {
       image(this.character, 0, 0, 80, 80, 0, 0, 80, 80);
     } else {
