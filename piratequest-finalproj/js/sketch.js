@@ -1,12 +1,10 @@
-let spelunkyCharacterSpritesheet, greenCharacterSpritesheet, ninjaCharacterSpritesheet, blueCharacterSpritesheet;
+let pirateCharacterSpritesheet;
 let array = [];
+
 
  function preload() {
   //loading sprite sheets 
-   spelunkyCharacterSpritesheet = loadImage("spritecharacters/PC Computer - Spelunky - SpelunkyGuy.png");
-   blueCharacterSpritesheet = loadImage("spritecharacters/PC Computer - Spelunky - Blue.png");
-   greenCharacterSpritesheet = loadImage("spritecharacters/PC Computer - Spelunky - Green.png");
-   ninjaCharacterSpritesheet = loadImage("spritecharacters/PC Computer - Spelunky - Ninja.png"); 
+   pirateCharacterSpritesheet = loadImage("piratequest-finalproj/libraries/PC Computer - Spelunky - Purple.png"); 
  }
 
 function setup() {
@@ -14,10 +12,7 @@ function setup() {
     // scale problem (-1)
     imageMode(CENTER);
 
-    spelunkyCharacter = new Character(spelunkyCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
-    blueCharacter = new Character(blueCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
-    greenCharacter = new Character(greenCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
-    ninjaCharacter = new Character(ninjaCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
+    pirateCharacter = new Character(pirateCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
     
     let choices = [35, 70]
     for(let i = 0; i < 20; i++) {
@@ -31,32 +26,23 @@ function setup() {
 function draw() {
   background(210,0,200,220);
 
-  blueCharacter.draw();
-  greenCharacter.draw();
-  spelunkyCharacter.draw();
-  ninjaCharacter.draw();
+  pirateCharacter.draw();
+
 }
 function keyPressed() {
   if(keyCode == RIGHT_ARROW) {
-    greenCharacter.go(1);
-    blueCharacter.go(1);
-    spelunkyCharacter.go(1);
-    ninjaCharacter.go(1);
+    pirateCharacter.go(1);
+  
 
   } else if (keyCode == LEFT_ARROW) {
-    greenCharacter.go(-1);
-    blueCharacter.go(-1);
-    spelunkyCharacter.go(-1);
-    ninjaCharacter.go(-1);
+   pirateCharacter.go(-1);
+    
 
   }
 }
 
 function keyReleased() {
-  greenCharacter.go(1);
-  blueCharacter.go(1);
-  spelunkyCharacter.go(1);
-  ninjaCharacter.go(1);
+  pirateCharacter.go(1);
 }
 
 class Cloud {
@@ -98,7 +84,7 @@ class Character {
     push();
     translate(this.x,this.y);
     scale(this.facing, 1);
-    
+
     if(this.move == 0) {
       image(this.character, 0, 0, 80, 80, 0, 0, 80, 80);
     } else {
