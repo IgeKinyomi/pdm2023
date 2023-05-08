@@ -1,122 +1,120 @@
-let pirateCharacterSpritesheet;
-let array = [];
+//Var
+let img; //  var for sprite 
+let player; // var player object
+let score = 0; // var player's score
+let gameState = 0; // global variable to store the game state: 0 = home screen, 1 = playing, 2 = game over
+let serial;
+let xVal, yVal, buttonState;
 
-
- function preload() {
-  //loading sprite sheets 
-   pirateCharacterSpritesheet = loadImage("piratequest-finalproj/libraries/PC Computer - Spelunky - Purple.png"); 
- }
+function preload() {
+  purplePirate= loadImage("piratequest-finalproj/libraries/PC Computer - Spelunky - Purple.png"); // load the sprite image
+}
 
 function setup() {
-  createCanvas(window.innerWidth, window.innerHeight);
-    // scale problem (-1)
-    imageMode(CENTER);
-
-    pirateCharacter = new Character(pirateCharacterSpritesheet, random(50, window.innerWidth-50), random(window.innerHeight/4 - 30, window.innerHeight - 40), random(2, 5));
-    
-    let choices = [35, 70]
-    for(let i = 0; i < 20; i++) {
-      array[i] = new Cloud(random(0, window.innerWidth), 70, random(1, 2));
-    }
-    for(let i = 20; i < 40; i++) {
-      array[i] = new Cloud(random(0, window.innerWidth), 35, random(1, 2));
-    }
-    
+  createCanvas(800, 400);
+  player = createSprite(width/2, height/2, 64, 64);
+  player.addImage("piratequest-finalproj/libraries/PC Computer - Spelunky - Purple.png"); // set the sprite image
+  textAlign(CENTER);
+  textSize(32);
 }
+
+async function serialRead()
+ {
+  while(true) {
+    const { value, done } = await reader.read();
+    if (done) {
+      reader.releaseLock();
+      break;
+    }
+    let temp = splitTokens(value,',');
+    pXvalue = xValue;
+    pYvalue = yValue;
+    xValue = temp[0];
+    yValue = temp[1];
+    console.log(xValue);
+    console.log(yValue);
+    isPressedButton = temp[2];    
+  }
+}
+async function connect() {
+  port = await navigator.serial.requestPort();
+
+  await port.open({ baudRate: 9600 });
+
+  writer = port.writable.getWriter();
+
+  reader = port.readable
+     .pipeThrough(new TextDecoderStream())
+     .pipeThrough(new TransformStream(new LineBreakTransformer()))
+     .getReader();
+}
+
+class LineBreakTransformer {
+  constructor() {
+    this.chunks = "";
+  }
+
+  transform(chunk, controller) {
+    this.chunks += chunk;
+    const lines = this.chunks.split("\n");
+    this.chunks = lines.pop();
+    lines.forEach((line) => controller.enqueue(line));
+  }
+
+  flush(controller) {
+    controller.enqueue(this.chunks);
+  }
+}
+ 
+
 function draw() {
-  background(210,0,200,220);
-
-  pirateCharacter.draw();
-
+  background(220);
+  if (gameState === 0) { // home screen
+    fill(0);
+    text('Press the SPACEBAR to start!', width/2, height/2);
+    if (keyDown(' ')) { // start the game
+      gameState = 1;
+    }
+  } else if (gameState === 1) { // playing
+    player.velocity.y += 0.8; // gravity
+    player.collide(platforms); // player collides with platforms
+    platforms.overlap(coins, collectCoin); // collect coins
+    drawSprites();
+    textSize(16);
+    text(`Score: ${score}`, 50, 50); // display score
+    score++; // increment score
+    if (player.position.y > height) { // player falls off screen
+      gameState = 2;
+    }
+  } else if (gameState === 2) { // game over
+    fill(0);
+    text(`Game Over\nScore: ${score}`, width/2, height/2);
+    noLoop();
+  }
 }
+
 function keyPressed() {
-  if(keyCode == RIGHT_ARROW) {
-    pirateCharacter.go(1);
-  
-
-  } else if (keyCode == LEFT_ARROW) {
-   pirateCharacter.go(-1);
-    
-
+  if (gameState === 1 && key === ' ') { // jump while playing
+    player.velocity.y = -16;
   }
 }
 
-function keyReleased() {
-  pirateCharacter.go(1);
+function collectCoin(platform, coin) {
+  coin.remove(); // remove coin from canvas
+  score += 10; // increase score
 }
 
-class Cloud {
-  constructor(x, y, speed) {
-    this.x = x;
-    this.y = y;
-    this.speed = speed;
-  }
-
-  draw() {
-    fill(255);
-    noStroke();
-    ellipse(this.x, this.y, 40, 20);
-    ellipse(this.x+30, this.y, 40, 20);
-    ellipse(this.x+60, this.y, 40, 20);
-    ellipse(this.x+15, this.y-10, 40, 20);
-    ellipse(this.x+45, this.y-10, 40, 20);
-
-    this.x += this.speed;
-
-    if(this.x > window.innerWidth + 100) {
-      this.x = -100;
-    }
-  }
-
-}
-
-class Character {
-  constructor(character, x, y, speed) {
-    this.character = character;
-    this.x = x;
-    this.y = y;
-    this.move = 0;
-    this.facing = 1;
-    this.speed = speed;
-  }
-
-   draw() {
-    push();
-    translate(this.x,this.y);
-    scale(this.facing, 1);
-
-    if(this.move == 0) {
-      image(this.character, 0, 0, 80, 80, 0, 0, 80, 80);
-    } else {
-      image(this.character, 0, 0, 80, 80, 80 * (this.sx + 1), 0, 80, 80);
-    }
-
-
-    if(frameCount % (7 - (round(this.speed - 2))) == 0) {
-      this.sx = (this.sx + 1) % 8;
-    }
-
-    if(this.x > window.innerWidth) {
-      this.move = -(this.move);
-      this.facing = -(this.facing);
-    }
-
-    if(this.x < 0) {
-      this.move = -(this.move);
-      this.facing = -(this.facing);
-    }
-
-    this.x += this.speed * this.move;
-    pop();
-  }
-
-   go(direction) {
-    this.move = direction;
-    this.facing = direction;
-    this.sx = 3;
-  }
-
-  stop() {
-    this.move = 0;
+// create platforms and coins
+let platforms = new Group();
+let coins = new Group();
+for (let i = 0; i < 5; i++) {
+  let platform = createSprite(random(width), random(height-50, height), random(100, 300), 20);
+  platform.shapeColor = color(0, 255, 0);
+  platform.velocity.x = random(-5, 5);
+  platforms.add(platform);
+  for (let j = 0; j < 3; j++) {
+    let coin = createSprite(random(platform.position.x-platform.width/2+10, platform.position.x+platform.width/2-10), platform.position.y-20, 10, 10);
+    coin.shapeColor = color(255, 255, 0);
+    coins.add(coin);
   }
 }
