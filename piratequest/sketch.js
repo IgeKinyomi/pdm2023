@@ -5,9 +5,11 @@ let coins = [];
 let score = 0;
 let lives = 3;
 let isGameOver = false;
-let gameStarted = false;
+let isPlaying = false;
 let gameStartTime;
 let gameEndTime;
+let gameStarted = false;
+
 //music
 let simpSynth, bgSeq, drawSeq;
 let bgMelody = ["C4", "D4", "E4", "F4", "G4", "A4"];
@@ -50,7 +52,7 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 function draw() {
-  if (gameStarted && lives > 0) {
+  if (isPlaying) {
     clear();
     background(0, 0, 255); // Set the background color to blue
     player.show();
@@ -154,15 +156,15 @@ class Ground {
 }
 class Coin {
   constructor() {
-    this.r = 25;
+    this.size = 30;
     this.x = width;
-    this.y = height - this.r;
-    this.speed = 10;
-    this.collected = false;
+    this.y = random(height - this.size);
+    this.speed = 5;
   }
 
   show() {
-    ellipse(this.x, this.y, this.r * 2);
+    fill(255, 255, 0);
+    ellipse(this.x, this.y, this.size);
   }
 
   update() {
@@ -170,42 +172,43 @@ class Coin {
   }
 
   offscreen() {
-    return this.x < -this.r;
-  }
-
-  hits(player) {
-    if (!this.collected && collideRectCircle(player.x, player.y, player.r, player.r, this.x, this.y, this.r * 2)) {
-      this.collected = true;
-      return true;
-    }
-    return false;
+    return (this.x + this.size < 0);
   }
 }
 
 function mouseClicked() {
   Tone.context.resume();
-    if (!gameStarted) {
-      gameStarted = true;
-      obstacles.push(new Obstacle());
-      coins.push(new Coin());
-      loop();
+  if (!gameStarted) { // spacebar
+    if (isGameOver) {
+      restartGame();
+    } else if (!isPlaying) {
+      startGame();
+    } else {
+      player.jump();
+    }
+  } else if (keyCode === UP_ARROW) {
+    if (!isPlaying) {
+      startGame();
+    } else {
+      player.jump();
     }
   }
+}
 
 function startGame() {
-  gameStarted = true;
+  isPlaying = true;
   gameStartTime = millis();
 }
 
 function gameOver() {
   isGameOver = true;
-  gameStarted = true;
+  isPlaying = false;
   gameEndTime = millis();
 }
 
 function restartGame() {
   isGameOver = false;
-  gameStarted = true;
+  isPlaying = true;
   score = 0;
   lives = 3;
   player = new Player();
@@ -216,26 +219,33 @@ function restartGame() {
 
 class Player {
   constructor() {
-    this.r = 50;
-    this.x = this.r;
-    this.y = height - this.r;
-    this.vy = 0;
+    this.x = 50;
+    this.y = height - 50;
+    this.width = 50;
+    this.height = 50;
+    this.yVelocity = 0;
     this.gravity = 1.5;
   }
-
-  display() {
-    rect(this.x, this.y, this.r, this.r);
+  
+  show() {
+    fill(0);
+    rect(this.x, this.y, this.width, this.height);
   }
-
-  jump() {
-    if (this.y == height - this.r) {
-      this.vy = -25;
+  
+  update() {
+    this.yVelocity += this.gravity;
+    this.y += this.yVelocity;
+    
+    // check for floor collision
+    if (this.y + this.height > height) {
+      this.y = height - this.height;
+      this.yVelocity = 0;
     }
   }
-
-  move() {
-    this.y += this.vy;
-    this.vy += this.gravity;
-    this.y = constrain(this.y, 0, height - this.r);
+  
+  jump() {
+    if (this.y + this.height == height) {
+      this.yVelocity = -25;
+    }
   }
 }
