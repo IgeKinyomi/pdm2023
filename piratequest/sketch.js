@@ -106,12 +106,13 @@ class Obstacle {
   
     update() {
       this.x -= this.speed;
+    }
       offscreen() {
         return (this.x + this.width < 0);
       }
     }
   
-    isColliding(player) {
+    hits(player) {
       return (
         this.x < player.x + player.width &&
         this.x + this.width > player.x &&
@@ -119,7 +120,6 @@ class Obstacle {
         this.y + this.height > player.y
       );
     }
-  }
   
 
 class Ground {
