@@ -9,6 +9,9 @@ let isPlaying = false;
 let gameStartTime;
 let gameEndTime;
 
+function preload() {
+  purplePirate= loadImage("images/PC Computer - Spelunky - Purple.png"); // load the sprite image
+}
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(200, 200, 200);
