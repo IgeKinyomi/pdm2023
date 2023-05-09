@@ -85,7 +85,7 @@ function draw() {
     clear();
     textSize(40);
     textAlign(CENTER);
-    text("Press space to start", width / 2, height / 2 - 20);
+    text("Press the spacebar to start", width / 2, height / 2 - 20);
     textSize(20);
     text(`Score: ${score}`, width / 2, height / 2 + 20);
   }
@@ -99,7 +99,7 @@ class Obstacle {
       this.y = height - this.height - 20;
       this.speed = 5;
     }
-}
+
   
     show() {
       rect(this.x, this.y, this.width, this.height);
@@ -120,7 +120,7 @@ class Obstacle {
         this.y + this.height > player.y
       );
     }
-  
+}
 
 class Ground {
   constructor() {
@@ -133,6 +133,27 @@ class Ground {
   show() {
     fill(0, 200, 0); // set the ground color to green
     rect(this.x1, this.y1, this.x2, this.y2);
+  }
+}
+class Coin {
+  constructor() {
+    this.size = 30;
+    this.x = width;
+    this.y = random(height - this.size);
+    this.speed = 5;
+  }
+
+  show() {
+    fill(255, 255, 0);
+    ellipse(this.x, this.y, this.size);
+  }
+
+  update() {
+    this.x -= this.speed;
+  }
+
+  offscreen() {
+    return (this.x + this.size < 0);
   }
 }
 
