@@ -9,10 +9,10 @@ let isPlaying = false;
 let gameStartTime;
 let gameEndTime;
 
-function preload() {
-  font = loadFont('Prompt', sans-serif;)
-  purplePirate= loadImage("images/PC Computer - Spelunky - Purple.png"); // load the sprite image
-}
+//add sprite and new font
+//function preload() {
+ // font = loadFont('Prompt', sans-serif);
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   background(200, 200, 200);
@@ -26,7 +26,7 @@ function setup() {
   //bg color
   background(0, 0, 255);
    // Set the text font to Prompt
-   textFont(font);
+   //textFont(font);
 }
 
 function windowResized() {
