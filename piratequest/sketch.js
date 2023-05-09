@@ -42,7 +42,7 @@ function setup() {
   background(0, 0, 255);
    // Set the text font to Prompt
    //textFont(font);
-   
+   Tone.Transport.bpm.value = 90;
    Tone.Transport.start();
 }
 
@@ -175,6 +175,7 @@ class Coin {
 }
 
 function keyPressed() {
+  Tone.context.resume();
   if (keyCode === 32) { // spacebar
     if (isGameOver) {
       restartGame();
