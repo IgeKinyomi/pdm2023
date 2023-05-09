@@ -5,7 +5,7 @@ let coins = [];
 let score = 0;
 let lives = 3;
 let isGameOver = false;
-let isPlaying = false;
+let gameStarted = false;
 let gameStartTime;
 let gameEndTime;
 //music
@@ -50,7 +50,7 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 function draw() {
-  if (isPlaying) {
+  if (gameStarted && lives > 0) {
     clear();
     background(0, 0, 255); // Set the background color to blue
     player.show();
@@ -154,15 +154,15 @@ class Ground {
 }
 class Coin {
   constructor() {
-    this.size = 30;
+    this.r = 25;
     this.x = width;
-    this.y = random(height - this.size);
-    this.speed = 5;
+    this.y = height - this.r;
+    this.speed = 10;
+    this.collected = false;
   }
 
-  show() {
-    fill(255, 255, 0);
-    ellipse(this.x, this.y, this.size);
+  display() {
+    ellipse(this.x, this.y, this.r * 2);
   }
 
   update() {
@@ -170,14 +170,22 @@ class Coin {
   }
 
   offscreen() {
-    return (this.x + this.size < 0);
+    return this.x < -this.r;
+  }
+
+  hits(player) {
+    if (!this.collected && collideRectCircle(player.x, player.y, player.r, player.r, this.x, this.y, this.r * 2)) {
+      this.collected = true;
+      return true;
+    }
+    return false;
   }
 }
 
 function mouseClicked() {
   Tone.context.resume();
     if (!gameStarted) {
-      isPlaying = true;
+      gameStarted = true;
       obstacles.push(new Obstacle());
       coins.push(new Coin());
       loop();
@@ -185,19 +193,19 @@ function mouseClicked() {
   }
 
 function startGame() {
-  isPlaying = true;
+  gameStarted = true;
   gameStartTime = millis();
 }
 
 function gameOver() {
   isGameOver = true;
-  isPlaying = false;
+  gameStarted = true;
   gameEndTime = millis();
 }
 
 function restartGame() {
   isGameOver = false;
-  isPlaying = true;
+  gameStarted = true;
   score = 0;
   lives = 3;
   player = new Player();
@@ -208,33 +216,26 @@ function restartGame() {
 
 class Player {
   constructor() {
-    this.x = 50;
-    this.y = height - 50;
-    this.width = 50;
-    this.height = 50;
-    this.yVelocity = 0;
+    this.r = 50;
+    this.x = this.r;
+    this.y = height - this.r;
+    this.vy = 0;
     this.gravity = 1.5;
   }
-  
-  show() {
-    fill(0);
-    rect(this.x, this.y, this.width, this.height);
+
+  display() {
+    rect(this.x, this.y, this.r, this.r);
   }
-  
-  update() {
-    this.yVelocity += this.gravity;
-    this.y += this.yVelocity;
-    
-    // check for floor collision
-    if (this.y + this.height > height) {
-      this.y = height - this.height;
-      this.yVelocity = 0;
-    }
-  }
-  
+
   jump() {
-    if (this.y + this.height == height) {
-      this.yVelocity = -25;
+    if (this.y == height - this.r) {
+      this.vy = -25;
     }
+  }
+
+  move() {
+    this.y += this.vy;
+    this.vy += this.gravity;
+    this.y = constrain(this.y, 0, height - this.r);
   }
 }
