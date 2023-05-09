@@ -8,7 +8,6 @@ let isGameOver = false;
 let isPlaying = false;
 let gameStartTime;
 let gameEndTime;
-let gameStarted = false;
 //music
 let simpSynth, bgSeq, drawSeq;
 let bgMelody = ["C4", "D4", "E4", "F4", "G4", "A4"];
@@ -178,7 +177,7 @@ class Coin {
 function mouseClicked() {
   Tone.context.resume();
     if (!gameStarted) {
-      gameStarted = true;
+      isPlaying = true;
       obstacles.push(new Obstacle());
       coins.push(new Coin());
       loop();
