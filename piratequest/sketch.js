@@ -102,7 +102,7 @@ function draw() {
     clear();
     textSize(40);
     textAlign(CENTER);
-    text("Press the spacebar to start", width / 2, height / 2 - 20);
+    text("Click the mouse to start!", width / 2, height / 2 - 20);
     textSize(20);
     text(`Score: ${score}`, width / 2, height / 2 + 20);
   }
@@ -174,24 +174,15 @@ class Coin {
   }
 }
 
-function keyPressed() {
+function mouseClicked() {
   Tone.context.resume();
-  if (keyCode === 32) { // spacebar
-    if (isGameOver) {
-      restartGame();
-    } else if (!isPlaying) {
-      startGame();
-    } else {
-      player.jump();
-    }
-  } else if (keyCode === UP_ARROW) {
-    if (!isPlaying) {
-      startGame();
-    } else {
-      player.jump();
+    if (!gameStarted) {
+      gameStarted = true;
+      obstacles.push(new Obstacle());
+      coins.push(new Coin());
+      loop();
     }
   }
-}
 
 function startGame() {
   isPlaying = true;
