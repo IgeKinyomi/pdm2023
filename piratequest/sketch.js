@@ -161,7 +161,7 @@ class Coin {
     this.collected = false;
   }
 
-  display() {
+  show() {
     ellipse(this.x, this.y, this.r * 2);
   }
 
