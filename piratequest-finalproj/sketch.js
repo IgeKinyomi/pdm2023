@@ -7,6 +7,7 @@ let platform;
 let coins;
 let serial;
 let xVal, yVal, buttonState;
+
 // for music 
 let simpSynth, bgSeq, drawSeq;
 let bgMelody = ["C4", "D4", "E4", "F4", "G4", "A4"];
