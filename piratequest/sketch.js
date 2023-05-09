@@ -10,6 +10,7 @@ let gameStartTime;
 let gameEndTime;
 
 function preload() {
+  font = loadFont('Prompt', sans-serif;)
   purplePirate= loadImage("images/PC Computer - Spelunky - Purple.png"); // load the sprite image
 }
 function setup() {
@@ -20,10 +21,12 @@ function setup() {
   obstacles.push(new Obstacle());
 
   textSize(20);
-  fill(255);
+  fill(0, 0, 0); //text color
   textAlign(RIGHT, TOP);
   //bg color
   background(0, 0, 255);
+   // Set the text font to Prompt
+   textFont(font);
 }
 
 function windowResized() {
