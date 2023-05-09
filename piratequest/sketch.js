@@ -99,6 +99,7 @@ class Obstacle {
       this.y = height - this.height - 20;
       this.speed = 5;
     }
+}
   
     show() {
       rect(this.x, this.y, this.width, this.height);
@@ -110,7 +111,6 @@ class Obstacle {
       offscreen() {
         return (this.x + this.width < 0);
       }
-    }
   
     hits(player) {
       return (
