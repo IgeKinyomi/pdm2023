@@ -14,12 +14,22 @@ function setup() {
   background(200, 200, 200);
   player = new Player();
   ground = new Ground();
+  obstacles.push(new Obstacle());
+
+  textSize(20);
+  fill(255);
+  textAlign(RIGHT, TOP);
+  //bg color
+  background(0, 0, 255);
 }
 
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+}
 function draw() {
   if (isPlaying) {
     clear();
-    background(200, 200, 200);
+    background(0, 0, 255); // Set the background color to blue
     player.show();
     player.update();
     ground.show();
@@ -56,8 +66,8 @@ function draw() {
       }
     }
     textSize(20);
-    text(`Score: ${score}`, 10, 30);
-    text(`Lives: ${lives}`, 10, 60);
+    text(`Score: ${score}`, width - 10, 10);
+    text(`Lives: ${lives}`, width - 10, 40);
   } else if (isGameOver) {
     clear();
     textSize(40);
@@ -74,6 +84,34 @@ function draw() {
     text(`Score: ${score}`, width / 2, height / 2 + 20);
   }
 }
+
+class Obstacle {
+    constructor() {
+      this.width = 20;
+      this.height = 60;
+      this.x = width;
+      this.y = height - this.height - 20;
+      this.speed = 5;
+    }
+  
+    draw() {
+      rect(this.x, this.y, this.width, this.height);
+    }
+  
+    update() {
+      this.x -= this.speed;
+    }
+  
+    isColliding(player) {
+      return (
+        this.x < player.x + player.width &&
+        this.x + this.width > player.x &&
+        this.y < player.y + player.height &&
+        this.y + this.height > player.y
+      );
+    }
+  }
+  
 
 class Ground {
   constructor() {
