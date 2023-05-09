@@ -100,12 +100,15 @@ class Obstacle {
       this.speed = 5;
     }
   
-    draw() {
+    show() {
       rect(this.x, this.y, this.width, this.height);
     }
   
     update() {
       this.x -= this.speed;
+      offscreen() {
+        return (this.x + this.width < 0);
+      }
     }
   
     isColliding(player) {
