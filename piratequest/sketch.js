@@ -8,6 +8,7 @@ let isGameOver = false;
 let isPlaying = false;
 let gameStartTime;
 let gameEndTime;
+let gameStarted = false;
 //music
 let simpSynth, bgSeq, drawSeq;
 let bgMelody = ["C4", "D4", "E4", "F4", "G4", "A4"];
