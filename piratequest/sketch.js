@@ -8,7 +8,22 @@ let isGameOver = false;
 let isPlaying = false;
 let gameStartTime;
 let gameEndTime;
+//music
+let simpSynth, bgSeq, drawSeq;
+let bgMelody = ["C4", "D4", "E4", "F4", "G4", "A4"];
+let drawMelody = ["F3", "E3", "D3", "C3", "B3", "A3"];
 
+simpSynth = new Tone.Synth().toMaster();
+
+bgSeq = new Tone.Sequence(function(time, note) {
+  simpSynth.triggerAttackRelease(note, 0.5);
+  console.log(note);
+}, bgMelody, '4n');
+
+drawSeq = new Tone.Sequence(function(time, note) {
+  simpSynth.triggerAttackRelease(note, 0.5);
+  console.log(note);
+}, drawMelody, '4n');
 //add sprite and new font
 //function preload() {
  // font = loadFont('Prompt', sans-serif);
@@ -27,6 +42,8 @@ function setup() {
   background(0, 0, 255);
    // Set the text font to Prompt
    //textFont(font);
+   
+   Tone.Transport.start();
 }
 
 function windowResized() {
