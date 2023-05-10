@@ -174,6 +174,13 @@ class Coin {
   offscreen() {
     return (this.x + this.size < 0);
   }
+  hits(player) {
+    return (
+      this.x < player.x + player.width &&
+      this.x + this.size > player.x &&
+      this.y < player.y + player.height &&
+      this.y + this.size > player.y
+    );
 }
 
 function mouseClicked() {
