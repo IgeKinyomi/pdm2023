@@ -10,6 +10,21 @@ let gameStartTime;
 let gameEndTime;
 let gameStarted = false;
 
+let port;
+let writer, reader;
+const encoder = new TextEncoder();
+const decorder = new TextDecoder();
+
+let xValue = 00;
+let yValue = 00;
+let isPressedButton = 1;
+let cursor;
+let redC = 100;
+let greenC = 100;
+let blueC = 100;
+let pXvalue = 0;
+let pYvalue = 0;
+
 //music
 let simpSynth, bgSeq, drawSeq;
 let bgMelody = ["C4", "D4", "E4", "F4", "G4", "A4"];
@@ -31,6 +46,10 @@ drawSeq = new Tone.Sequence(function(time, note) {
  // font = loadFont('Prompt', sans-serif);
 
 function setup() {
+  if ("serial" in navigator) {
+    textAlign(CENTER,CENTER);
+    textSize(25);
+    {
   createCanvas(windowWidth, windowHeight);
   background(200, 200, 200);
   player = new Player();
@@ -46,12 +65,36 @@ function setup() {
    //textFont(font);
    Tone.Transport.bpm.value = 90;
    Tone.Transport.start();
+    }
+  }
 }
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 function draw() {
+  let button = createButton("Connect");
+  button.position(350,10);
+  button.mousePressed(connect);
+  button.style('width','100px');
+  button.style('height','50px');
+  button.style('font-size', '20px');
+  button.style('background-color', 'black');
+  button.style('color', 'white');
+
+   
+    cursor = circle(xValue,yValue);
+if(isPressedButton==0){
+      buttonPressed();
+    }
+    if (reader && frameCount%3==0) {
+      serialRead();
+      joystickDragged();
+    }
+
+  if(writer&& frameCount%5===0){
+    writer.write(encoder.encode(redC+","+greenC+","+blueC+"\n"));
+  }
   if (isPlaying) {
     clear();
     bgSeq.start();
@@ -105,9 +148,17 @@ function draw() {
     clear();
     textSize(40);
     textAlign(CENTER);
-    text("Click the mouse to start!", width / 2, height / 2 - 20);
+    text("Click the button to start!", width / 2, height / 2 - 20);
     textSize(20);
     text(`Score: ${score}`, width / 2, height / 2 + 20);
+  }
+}
+
+function joystickDragged() {
+  
+  if (xValue > 55 || mouseY > 431) {
+    strokeWeight(10);
+    line(xValue, yValue, pXvalue, pYvalue);
   }
 }
 
@@ -184,8 +235,8 @@ class Coin {
     );
 }
 }
-
-function mouseClicked() {
+//mouse clicked changed to button pressed
+function buttonPressed() {
   Tone.context.resume();
   if (!gameStarted) { // spacebar
     if (isGameOver) {
@@ -225,6 +276,54 @@ function restartGame() {
   coins = [];
   gameStartTime = millis();
 }
+async function serialRead()
+ {
+  while(true) {
+    const { value, done } = await reader.read();
+    if (done) {
+      reader.releaseLock();
+      break;
+    }
+    let temp = splitTokens(value,',');
+    pXvalue = xValue;
+    pYvalue = yValue;
+    xValue = temp[0];
+    yValue = temp[1];
+    console.log(xValue);
+    console.log(yValue);
+    isPressedButton = temp[2];    
+  }
+}
+
+async function connect() {
+  port = await navigator.serial.requestPort();
+
+  await port.open({ baudRate: 9600 });
+
+  writer = port.writable.getWriter();
+
+  reader = port.readable
+     .pipeThrough(new TextDecoderStream())
+     .pipeThrough(new TransformStream(new LineBreakTransformer()))
+     .getReader();
+}
+
+class LineBreakTransformer {
+  constructor() {
+    this.chunks = "";
+  }
+
+  transform(chunk, controller) {
+    this.chunks += chunk;
+    const lines = this.chunks.split("\n");
+    this.chunks = lines.pop();
+    lines.forEach((line) => controller.enqueue(line));
+  }
+
+  flush(controller) {
+    controller.enqueue(this.chunks);
+  }
+}
 
 class Player {
   constructor() {
@@ -235,6 +334,7 @@ class Player {
     this.yVelocity = 0;
     this.gravity = 1.5;
   }
+  
   
   show() {
     fill(0);
