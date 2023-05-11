@@ -54,6 +54,7 @@ function windowResized() {
 function draw() {
   if (isPlaying) {
     clear();
+    bgSeq.start();
     background(0, 0, 255); // Set the background color to blue
     player.show();
     player.update();
@@ -181,6 +182,7 @@ class Coin {
       this.y < player.y + player.height &&
       this.y + this.size > player.y
     );
+}
 }
 
 function mouseClicked() {
